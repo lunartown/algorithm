@@ -16,7 +16,8 @@ class Main {
 			N = Integer.parseInt(st.nextToken());
 			M = Integer.parseInt(st.nextToken());
 			
-			sb.append(fact(M).divide(fact(N)).divide(fact(M-N))).append('\n');
+			sb.append(permu(M,N).divide(fact(N))).append('\n');
+			
 		}
 		
 		System.out.println(sb);
@@ -24,9 +25,16 @@ class Main {
 	
 	private static BigInteger fact (int n) {
 		BigInteger multi = new BigInteger("1");
-		if(n == 0) return multi;
-		for(int i = 1; i <= n; i++) {
+		for(int i = 2; i <= n; i++) {
 			multi = multi.multiply(new BigInteger(String.valueOf(i)));
+		}
+		return multi;
+	}
+	
+	private static BigInteger permu (int m, int n) {
+		BigInteger multi = new BigInteger("1");
+		for(int i = 0; i < n; i++) {
+			multi = multi.multiply(new BigInteger(String.valueOf(m - i)));
 		}
 		return multi;
 	}
