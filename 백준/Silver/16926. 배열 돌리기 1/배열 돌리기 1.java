@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
  * 처음 받을 때부터 저 순서로 받고 싶다! 어떻게 할까
  * 이제 코드를 읽어주세요
  */
+
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
@@ -36,15 +37,15 @@ public class Main {
 			input(N, M, i, 0);
 		}
 		
-		for(int i = 0; i < arr.length; i++) {
-			copyArr[i] = new int[arr[i].length];
-			for(int j = 0; j < arr[i].length ; j++) {
-				copyArr[i][j] = arr[i][(j + R) % arr[i].length];
-			}
-		}
+//		for(int i = 0; i < arr.length; i++) {
+//			copyArr[i] = new int[arr[i].length];
+//			for(int j = 0; j < arr[i].length ; j++) {
+//				copyArr[i][j] = arr[i][(j + R) % arr[i].length];
+//			}
+//		}
 		
 		for(int i = 1; i <= N; i++) {
-			output(N, M, i, 0);
+			output(N, M, i, R, 0);
 			sb.append('\n');
 		}
 		
@@ -80,18 +81,18 @@ public class Main {
 		}
 	}
 	
-	private static void output(int n, int m, int l, int order) {
+	private static void output(int n, int m, int l, int r, int order) {
 		if(l == 1) {
 			for(int i = 0; i < m; i++) {
-				sb.append(copyArr[order][i]).append(" ");
+				sb.append(arr[order][(i + r) % ((n + m) * 2 - 4)]).append(" ");
 			}
 		}else if(l == n) {
 			for(int i = 0; i < m; i++)
-				sb.append(copyArr[order][2 * m + n - 3 - i]).append(" ");
+				sb.append(arr[order][(2 * m + n - 3 - i + r) % ((n + m) * 2 - 4)]).append(" ");
 		}else {
-			sb.append(copyArr[order][2*(n+m) - 3 - l]).append(" ");
-			if (n>2 && m>2) output(n - 2, m - 2, l - 1, order + 1);
-			sb.append(copyArr[order][m - 2 + l]).append(" ");
+			sb.append(arr[order][(2*(n+m) - 3 - l + r) % ((n + m) * 2 - 4)]).append(" ");
+			if (n>2 && m>2) output(n - 2, m - 2, l - 1, r, order + 1);
+			sb.append(arr[order][(m - 2 + l + r) % ((n + m) * 2 - 4)]).append(" ");
 		}
 	}
 }
