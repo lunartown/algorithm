@@ -29,7 +29,6 @@ public class Main {
 		int R = Integer.parseInt(st.nextToken());
 		
 		arr = new int[Math.min(N, M) / 2][];
-		copyArr = new int[Math.min(N, M) / 2][];
 
 //		0) 기본적으로 한 줄씩 읽을 겁니다.	
 		for(int i = 1; i <= N; i++) {
@@ -37,12 +36,6 @@ public class Main {
 			input(N, M, i, 0);
 		}
 		
-//		for(int i = 0; i < arr.length; i++) {
-//			copyArr[i] = new int[arr[i].length];
-//			for(int j = 0; j < arr[i].length ; j++) {
-//				copyArr[i][j] = arr[i][(j + R) % arr[i].length];
-//			}
-//		}
 		
 		for(int i = 1; i <= N; i++) {
 			output(N, M, i, R, 0);
@@ -55,7 +48,6 @@ public class Main {
 	private static StringTokenizer st;
 	private static StringBuilder sb = new StringBuilder();
 	private static int[][] arr;
-	private static int[][] copyArr;
 	
 	private static void input(int n, int m, int l, int order) {
 //		 1) 1열, 마지막열 : 먼저 배열 생성하고
