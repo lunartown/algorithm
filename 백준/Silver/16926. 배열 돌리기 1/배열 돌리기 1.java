@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -21,7 +20,6 @@ import java.util.StringTokenizer;
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-//		System.setIn(new FileInputStream("res/input.txt"));
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		st = new StringTokenizer(in.readLine());
 		
@@ -31,9 +29,8 @@ public class Main {
 		
 		arr = new int[Math.min(N, M) / 2][];
 		copyArr = new int[Math.min(N, M) / 2][];
-		
 
-//		0) 기본적으로 한 줄씩 읽을 겁니다.
+//		0) 기본적으로 한 줄씩 읽을 겁니다.	
 		for(int i = 1; i <= N; i++) {
 			st = new StringTokenizer(in.readLine());
 			input(N, M, i, 0);
@@ -48,11 +45,14 @@ public class Main {
 		
 		for(int i = 1; i <= N; i++) {
 			output(N, M, i, 0);
-			System.out.println();
+			sb.append('\n');
 		}
+		
+		System.out.println(sb);
 	}
 
 	private static StringTokenizer st;
+	private static StringBuilder sb = new StringBuilder();
 	private static int[][] arr;
 	private static int[][] copyArr;
 	
@@ -83,15 +83,15 @@ public class Main {
 	private static void output(int n, int m, int l, int order) {
 		if(l == 1) {
 			for(int i = 0; i < m; i++) {
-				System.out.print(copyArr[order][i] + " ");
+				sb.append(copyArr[order][i]).append(" ");
 			}
 		}else if(l == n) {
 			for(int i = 0; i < m; i++)
-				System.out.print(copyArr[order][2 * m + n - 3 - i] + " ");
+				sb.append(copyArr[order][2 * m + n - 3 - i]).append(" ");
 		}else {
-			System.out.print(copyArr[order][2*(n+m) - 3 - l] + " ");
+			sb.append(copyArr[order][2*(n+m) - 3 - l]).append(" ");
 			if (n>2 && m>2) output(n - 2, m - 2, l - 1, order + 1);
-			System.out.print(copyArr[order][m - 2 + l] + " ");
+			sb.append(copyArr[order][m - 2 + l]).append(" ");
 		}
 	}
 }
