@@ -46,17 +46,24 @@ public class Main {
 		}
 		
 		for(int i = 2; i <= N; i++)
-			System.out.println(treeNode[i]);
+			sb.append(treeNode[i]).append('\n');
+		
+		System.out.println(sb);
 	}
 	
+//	Node라는 클래스를 만듭니다. 이름은 value입니다.
 	static class Node {
 		int value;
+		
+//		간선을 많이 가질 수 있기 때문에 ArrayList로 만듭니다.
 		ArrayList<Node> nodes = new ArrayList<>();
 		
+//		생성자
 		Node(int value){
 			this.value = value;
 		}
 		
+//		간선을 추가
 		void add(Node node) {
 			this.nodes.add(node);
 		}
