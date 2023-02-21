@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -11,7 +9,7 @@ public class Main {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 		
-		Integer[][] result = new Integer[6][3];
+		int[][] result = new int[6][3];
 		combination = new int[15][];
 		vis = new boolean[15];
 		for(int i = 0, cnt = 0; i < 6; i++) {
@@ -22,24 +20,19 @@ public class Main {
 		
 		label:for(int tc = 0; tc < 4; tc++) {
 			ans = 0;
-			int sum = 0;
 			StringTokenizer st = new StringTokenizer(in.readLine());
 			for(int j = 0; j < 6; j++) {
 				result[j][0] = Integer.parseInt(st.nextToken());
 				result[j][1] = Integer.parseInt(st.nextToken());
 				result[j][2] = Integer.parseInt(st.nextToken());
-				sum += result[j][0] + result[j][1] + result[j][2];
-				if(result[j][0] > 5 || result[j][1] > 5 || result[j][2] > 5) {
+				if(result[j][0] + result[j][1] + result[j][2] != 5) {
 					sb.append(0).append(' ');
 					continue label;
 				}
 			}
-			if(sum != 30) {
-				sb.append(0).append(' ');
-				continue;
-			}
-			Arrays.sort(result, (Integer[]a, Integer[]b) -> a[0] == b[0]? a[1] - b[1] : a[0] - b[0]);
+			
 			isAble(result, 0);
+			
 			sb.append(ans).append(' ');
 		}
 		System.out.println(sb);
@@ -49,7 +42,7 @@ public class Main {
 	static boolean[] vis;
 	static int ans;
 	
-	static void isAble(Integer[][] result, int k) {
+	static void isAble(int[][] result, int k) {
 		for(int i = 0; i < 6; i++) {
 			for(int j = 0; j < 3; j++) {
 				if(result[i][j] < 0) return;
