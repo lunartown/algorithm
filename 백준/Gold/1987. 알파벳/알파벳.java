@@ -64,19 +64,14 @@ public class Main {
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		
-		char[][] board = new char[R][C];
+		char[][] board = new char[R][];
 		int[][] vis = new int[R][C];
-		String str;
 		
 		for(int i = 0; i < R; i++) {
-			str = in.readLine();
-			for(int j = 0; j < C; j++) {
-				board[i][j] = str.charAt(j);
-			}
+			board[i] = in.readLine().toCharArray();
 		}
 		
-		int alpha = 1 << (board[0][0] - 'A');
-		search(0, 0, 1, alpha, board, vis);
+		search(0, 0, 1, 1 << (board[0][0] - 'A'), board, vis);
 		System.out.println(max);
 	}
 }
