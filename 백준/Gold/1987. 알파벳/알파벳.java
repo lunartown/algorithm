@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 	
 public class Main {
@@ -15,8 +16,7 @@ public class Main {
 		for(int i = 0; i < 4; i++) {
 			int nx = curX + dx[i];
 			int ny = curY + dy[i];
-			if(nx < 0 || nx >= R || ny < 0 || ny >= C
-				|| (alpha & (1 << (board[nx][ny] - 'A'))) != 0
+			if((alpha & (1 << (board[nx][ny] - 'A'))) != 0
 				|| (alpha | (1 << (board[nx][ny] - 'A'))) == vis[nx][ny]) continue;
 			
 			vis[nx][ny] = alpha;
@@ -31,19 +31,28 @@ public class Main {
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		
-		char[][] board = new char[R][C];
-		int[][] vis = new int[R][C];
+		char[][] board = new char[R+2][C+2];
+		int[][] vis = new int[R+1][C+1];
 		String str;
 		
-		for(int i = 0; i < R; i++) {
+		for(int i = 1; i <= R; i++) {
 			str = in.readLine();
-			for(int j = 0; j < C; j++) {
-				board[i][j] = str.charAt(j);
+			for(int j = 1; j <= C; j++) {
+				board[i][j] = str.charAt(j-1);
 			}
 		}
 		
+		char wall = board[1][1];
+        Arrays.fill(board[0], wall);
+        Arrays.fill(board[R + 1], wall);
+        for (int i = 0; i <= R + 1; i++){
+            for (int j : new int[]{0, C+1}){
+                board[i][j] = wall;
+            }
+        }
+		
 		int alpha = 1 << (board[0][0] - 'A');
-		search(0, 0, 1, alpha, board, vis);
+		search(1, 1, 1, alpha, board, vis);
 		System.out.println(max);
 	}
 }
