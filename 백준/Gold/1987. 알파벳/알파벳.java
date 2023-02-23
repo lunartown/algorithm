@@ -14,6 +14,7 @@ public class Main {
 		
 		char[][] board = new char[R][C];
 		boolean[][] vis = new boolean[R][C];
+		boolean[] alpha = new boolean[26];
 		String str;
 		
 		for(int i = 0; i < R; i++) {
@@ -23,7 +24,8 @@ public class Main {
 			}
 		}
 		
-		search(0, 0, 1, board[0][0] + "", board, vis);
+		alpha[board[0][0] - 'A'] = true;
+		search(0, 0, 1, alpha, board, vis);
 		System.out.println(max);
 	}
 
@@ -31,17 +33,19 @@ public class Main {
 	static int[] dx = {0, 1, 0, -1};
 	static int[] dy = {1, 0, -1, 0};
 	
-	private static void search(int curX, int curY, int len, String str, char[][] board, boolean[][] vis) {		
+	private static void search(int curX, int curY, int len, boolean[] alpha, char[][] board, boolean[][] vis) {		
 		for(int i = 0; i < 4; i++) {
 			int nx = curX + dx[i];
 			int ny = curY + dy[i];
 			if(nx < 0 || nx >= R || ny < 0 || ny >= C
 					|| vis[nx][ny]
-							||str.contains(board[nx][ny]+"")) continue;
+							|| alpha[board[nx][ny] - 'A']) continue;
 			
 			vis[nx][ny] = true;
-			search(nx, ny, len + 1, str + board[nx][ny], board, vis);
+			alpha[board[nx][ny] - 'A'] = true;
+			search(nx, ny, len + 1, alpha, board, vis);
 			vis[nx][ny] = false;
+			alpha[board[nx][ny] - 'A'] = false;
 		}
 		
 		max = Math.max(max, len);
