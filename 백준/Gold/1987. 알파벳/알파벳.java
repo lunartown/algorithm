@@ -4,21 +4,23 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 	
 public class Main {
-	static int R, C, max = 1;
+	static int R, C, vis[][], max = 1;
+	static char[][] board;
 	
-	private static void search(int curX, int curY, int len, int alpha, char[][] board, int[][] vis) {		
+	private static void search(int curX, int curY, int len, int alpha) {		
 		max = Math.max(max, len);
 		if(max == 26) return;
 		int nextAlpha, nx, ny;
+		
+		if(vis[curX][curY] == alpha) return;
+		vis[curX][curY] = alpha;
 		
 		if(curX > 0) {
 			nx = curX - 1;
 			nextAlpha = 1 << (board[nx][curY] - 'A');
 			
-			if((alpha & nextAlpha) == 0
-					&& (alpha | nextAlpha) != vis[nx][curY]) {
-				vis[nx][curY] = alpha;
-				search(nx, curY, len + 1, alpha | (1 << (board[nx][curY] - 'A')), board, vis);
+			if((alpha & nextAlpha) == 0) {
+				search(nx, curY, len + 1, alpha | (1 << (board[nx][curY] - 'A')));
 			}
 		}
 		
@@ -26,10 +28,8 @@ public class Main {
 			nx = curX + 1;
 			nextAlpha = 1 << (board[nx][curY] - 'A');
 			
-			if((alpha & nextAlpha) == 0
-					&& (alpha | nextAlpha) != vis[nx][curY]) {
-				vis[nx][curY] = alpha;
-				search(nx, curY, len + 1, alpha | (1 << (board[nx][curY] - 'A')), board, vis);
+			if((alpha & nextAlpha) == 0) {
+				search(nx, curY, len + 1, alpha | (1 << (board[nx][curY] - 'A')));
 			}
 		}
 		
@@ -37,10 +37,8 @@ public class Main {
 			ny = curY - 1;
 			nextAlpha = 1 << (board[curX][ny] - 'A');
 			
-			if((alpha & nextAlpha) == 0
-					&& (alpha | nextAlpha) != vis[curX][ny]) {
-				vis[curX][ny] = alpha;
-				search(curX, ny, len + 1, alpha | (1 << (board[curX][ny] - 'A')), board, vis);
+			if((alpha & nextAlpha) == 0) {
+				search(curX, ny, len + 1, alpha | (1 << (board[curX][ny] - 'A')));
 			}
 		}
 		
@@ -48,10 +46,8 @@ public class Main {
 			ny = curY + 1;
 			nextAlpha = 1 << (board[curX][ny] - 'A');
 			
-			if((alpha & nextAlpha) == 0
-					&& (alpha | nextAlpha) != vis[curX][ny]) {
-				vis[curX][ny] = alpha;
-				search(curX, ny, len + 1, alpha | (1 << (board[curX][ny] - 'A')), board, vis);
+			if((alpha & nextAlpha) == 0) {
+				search(curX, ny, len + 1, alpha | (1 << (board[curX][ny] - 'A')));
 			}
 		}
 		
@@ -64,14 +60,14 @@ public class Main {
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		
-		char[][] board = new char[R][];
-		int[][] vis = new int[R][C];
+		board = new char[R][];
+		vis = new int[R][C];
 		
 		for(int i = 0; i < R; i++) {
 			board[i] = in.readLine().toCharArray();
 		}
 		
-		search(0, 0, 1, 1 << (board[0][0] - 'A'), board, vis);
+		search(0, 0, 1, 1 << (board[0][0] - 'A'));
 		System.out.println(max);
 	}
 }
