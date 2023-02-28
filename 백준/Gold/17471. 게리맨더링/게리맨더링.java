@@ -11,24 +11,25 @@ public class Main {
 	static int N, total, half, max, popul[];
 	static List<Integer>[] adjoin;
 	
-	static void permutation(int flag, int sum) {		
-		if(Math.abs(total - 2 * max) > Math.abs(total - 2 * sum)) {
+	static void permutation(int flag, int sum, int flagFlag) {
+		if(sum > half) return;
+		
+		if(sum > max) {
 			if(connect(flag) && connect((1 << N) - 1 - flag)) {
-//				System.out.println("flag : " + Integer.toBinaryString(flag) + " sum : " + sum);
-//				System.out.println("flag2 : " + Integer.toBinaryString(((1<<N) - 1 - flag)));
 				max = sum;
 			}
 		}
+//		
+//		if((flagFlag & (1 << flag)) != 0) return;
 		
-		for(int i = 1; i < N; i++) {
+		for(int i = 0; i < N; i++) {
 			if((flag & (1 << i)) != 0) continue;
-			permutation(flag | (1 << i), sum + popul[i+1]);
+			permutation(flag | (1 << i), sum + popul[i+1], flagFlag | (1 << flag));
 		}
 	}
 	
 	static boolean connect(int flag) {
 		int root = 32 - Integer.numberOfLeadingZeros(flag);
-//		System.out.println("root : " + root);
 		Queue<Integer> bfs = new ArrayDeque<>();
 		int newFlag = flag - (1 << (root - 1));
 		int vis = 1 << (root - 1);
@@ -76,8 +77,8 @@ public class Main {
 		max = 0;
 		half = total / 2;
 		
-		permutation(1, popul[1]);
+		permutation(0, 0, 0);
 		
-		System.out.println(max == 0 || max == total? -1 : Math.abs(total - 2 * max));
+		System.out.println(max == 0? -1: total - 2 * max);
 	}
 }
