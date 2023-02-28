@@ -19,12 +19,11 @@ public class Main {
 				max = sum;
 			}
 		}
-//		
-//		if((flagFlag & (1 << flag)) != 0) return;
 		
 		for(int i = 0; i < N; i++) {
 			if((flag & (1 << i)) != 0) continue;
-			permutation(flag | (1 << i), sum + popul[i+1], flagFlag | (1 << flag));
+			if((flagFlag & (1 << (flag & (1 << i)))) != 0) continue;
+			permutation(flag | (1 << i), sum + popul[i+1], flagFlag | (1 << (flag | (1 << i))));
 		}
 	}
 	
