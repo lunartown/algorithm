@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 // 배열의 합 구하기
@@ -18,10 +19,17 @@ public class Main {
         int M = Integer.parseInt(st.nextToken());
 
         int[][] arr = new int[N+1][M+1];
-        for(int i = 1; i <= N; i++) {
+        st = new StringTokenizer(br.readLine());
+        arr[1][1] = Integer.parseInt(st.nextToken());
+        for(int i = 2; i <= M; i++) {
+            arr[1][i] = arr[1][i - 1] + Integer.parseInt(st.nextToken());
+        }
+
+        for(int i = 2; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
-            for(int j = 1; j <= M; j++) {
-                arr[i][j] = Integer.parseInt(st.nextToken());
+            arr[i][1] = arr[i - 1][1] + Integer.parseInt(st.nextToken());
+            for(int j = 2; j <= M; j++) {
+                arr[i][j] = arr[i - 1][j] + arr[i][j - 1] - arr[i - 1][j - 1] + Integer.parseInt(st.nextToken());
             }
         }
 
@@ -33,14 +41,7 @@ public class Main {
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
 
-            int sum = 0;
-            for(int k = i; k <= x; k++) {
-                for(int l = j; l <= y; l++) {
-                    sum += arr[k][l];
-                }
-            }
-
-            sb.append(sum).append("\n");
+            sb.append(arr[x][y] - arr[i - 1][y] - arr[x][j - 1] + arr[i - 1][j - 1]).append("\n");
         }
 
         System.out.println(sb);
