@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -14,18 +13,17 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        Map<String, Double> gradeTable = new HashMap<String, Double>() {{
-            put("A+", 4.5);
-            put("A0", 4.0);
-            put("B+", 3.5);
-            put("B0", 3.0);
-            put("C+", 2.5);
-            put("C0", 2.0);
-            put("D+", 1.5);
-            put("D0", 1.0);
-            put("F", 0.0);
-
-        }};
+        Map<String, Double> gradeTable = Map.of(
+                "A+", 4.5,
+                "A0", 4.0,
+                "B+", 3.5,
+                "B0", 3.0,
+                "C+", 2.5,
+                "C0", 2.0,
+                "D+", 1.5,
+                "D0", 1.0,
+                "F", 0.0
+        );
 
         double creditSum = 0.0;
         double gradeSum = 0.0;
