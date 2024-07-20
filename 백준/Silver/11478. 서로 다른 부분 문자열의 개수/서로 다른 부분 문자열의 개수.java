@@ -2,28 +2,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.HashSet;
 
-//서로 다른 부분 문자열의 갯수
-//같은 걸 찾은 다음에 빼자
-//안 되겠다 그냥 다 세자
+//부분 문자열 세기
+//중복을 뺀다
+//suffix array & lcp
 
 public class Main {
-    public static HashSet<String> splitString(String str) {
-        if(str.length() == 1) return new HashSet<>(Arrays.asList(str));
-        HashSet<String> result = splitString(str.substring(1, str.length()));
-
-        for(int i = 1; i <= str.length(); i++) {
-            result.add(str.substring(0, i));
-        }
-
-        return result;
-    }
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str = br.readLine();
+        int length = str.length();
 
-        System.out.println(splitString(str).size());
+        String[] suffix = new String[length];
+        for(int i = 0; i < length; i++) {
+            suffix[i] = str.substring(i);
+        }
+
+        Arrays.sort(suffix);
+        int dupl = 0;
+
+        for(int i = 1; i < length; i++) {
+            for(int j = 0; j < Math.min(suffix[i].length(), suffix[i - 1].length()); j++) {
+                if(suffix[i].charAt(j) == suffix[i - 1].charAt(j)) {
+                    dupl++;
+                } else break;
+            }
+        }
+
+        System.out.println((1 + length) * length / 2 - dupl);
     }
 }
