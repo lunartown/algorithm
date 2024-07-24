@@ -1,66 +1,75 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
-class MyStack {
-	int[] num = new int[10000];
-	int size = 0;
-	
-	void push(int X) {
-		num[size] = X;
-		size++;
-	}
-	
-	int pop() {
-		if(size != 0) {
-			size--;
-			return num[size];
-		} else return -1;
-	}
-	
-	int size() {
-		return this.size;
-	}
-	
-	int empty() {
-		if(size == 0)
-			return 1;
-		else return 0;
-	}
-	
-	int top() {
-		if(size != 0)
-			return num[size - 1];
-		else return -1;
-	}
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
+        CustomStack stack = new CustomStack();
+
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            switch (st.nextToken()) {
+                case "push":
+                    stack.push(Integer.parseInt(st.nextToken()));
+                    break;
+                case "pop":
+                    sb.append(stack.pop()).append('\n');
+                    break;
+                case "size":
+                    sb.append(stack.size()).append('\n');
+                    break;
+                case "empty":
+                    sb.append(stack.empty()).append('\n');
+                    break;
+                case "top":
+                    sb.append(stack.top()).append('\n');
+                    break;
+                default:
+                    throw new IOException("잘못된 입력입니다.");
+            }
+        }
+
+        System.out.println(sb);
+    }
 }
 
+class CustomStack {
+    int[] arr = new int[10001];
+    int size = 0;
 
-public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		StringTokenizer st;
-		
-		MyStack s = new MyStack();
-		
-		int N = Integer.parseInt(in.readLine());
-		String cmd;
-		
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(in.readLine());
-			cmd = st.nextToken();
-			
-			switch(cmd) {
-			case "push" : s.push(Integer.parseInt(st.nextToken())); break;
-			case "pop" : sb.append(s.pop() + "\n"); break;
-			case "size" : sb.append(s.size() + "\n"); break;
-			case "empty" : sb.append(s.empty() + "\n"); break;
-			case "top" : sb.append(s.top() + "\n");
-			}
-		}
-		
-		System.out.println(sb);
-	}
+    boolean push(int X) {
+        try {
+            arr[size] = X;
+            size++;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    int pop() {
+        if (size == 0) return -1;
+        size--;
+        return arr[size];
+    }
+
+    int size() {
+        return size;
+    }
+
+    int empty() {
+        if (size == 0) return 1;
+        return 0;
+    }
+
+    int top() {
+        if (size == 0) return -1;
+        return arr[size - 1];
+    }
 }
