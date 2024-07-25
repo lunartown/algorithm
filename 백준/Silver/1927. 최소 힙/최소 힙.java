@@ -10,14 +10,14 @@ class CustomHeap<E extends Comparable<E>> {
 
     CustomHeap() {
         size = 0;
-        queue = new Object[100000];
+        queue = new Object[11];
     }
 
-    private boolean grow(int minCapacity) {
+    private boolean grow() {
         int oldCapacity = queue.length;
-        int newCapacity = oldCapacity + oldCapacity < 64 ?
+        int newCapacity = oldCapacity + (oldCapacity < 64 ?
                 oldCapacity + 2 :
-                oldCapacity >>> 1;
+                oldCapacity >>> 1);
         queue = Arrays.copyOf(queue, newCapacity);
         return true;
     }
@@ -25,8 +25,8 @@ class CustomHeap<E extends Comparable<E>> {
     public boolean add(E e) {
         if (e == null)
             throw new NullPointerException();
-//        if (size >= queue.length)
-//            grow(size + 1);
+        if (size >= queue.length)
+            grow();
 
         //shift 연산
         int i = size;
