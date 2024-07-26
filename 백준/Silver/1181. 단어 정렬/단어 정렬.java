@@ -1,9 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.TreeSet;
-import java.util.stream.Stream;
 
 //문제 : 길이가 짧은 것부터, 같으면 사전 순
 //class로 감싼다
