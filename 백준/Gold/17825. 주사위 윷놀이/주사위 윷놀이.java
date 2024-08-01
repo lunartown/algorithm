@@ -91,11 +91,8 @@ public class Main {
         normalRoute[14].next = normalRoute[15];
     }
 
-    static int move(int depth, String str, String str2) {
+    static int move(int depth) {
         if (depth >= 10) {
-//            System.out.println(str);
-//            System.out.println(str2);
-//            System.out.println(Stream.of(str2.split(" ")).mapToInt(Integer::parseInt).sum());
             return 0;
         }
 
@@ -112,7 +109,7 @@ public class Main {
                 next.taken = true;
 
                 //dfs
-                int point = next.point + move(depth + 1, str + " " + i, str2 + " " + next.point);
+                int point = next.point + move(depth + 1);
                 if (point > maxPoint)
                     maxPoint = point;
 
@@ -128,8 +125,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        File file = new File("log.txt");
-//        System.setOut(new PrintStream(new FileOutputStream(file)));
 
         //맵 그리기
         drawMap();
@@ -141,7 +136,7 @@ public class Main {
 
         //출발
         pieces = new Node[]{normalRoute[0], normalRoute[0], normalRoute[0], normalRoute[0]};
-        int maxPoint = move(0, "0", "0");
+        int maxPoint = move(0);
         System.out.println(maxPoint);
     }
 }
