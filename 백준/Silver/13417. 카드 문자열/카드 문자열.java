@@ -17,9 +17,7 @@ public class Main {
                 if (c > temp.charAt(0)) {
                     temp.append(c);
                 } else {
-                    temp.reverse();
-                    temp.append(c);
-                    temp.reverse();
+                    temp.insert(0, c);
                 }
             }
             sb.append(temp).append("\n");
