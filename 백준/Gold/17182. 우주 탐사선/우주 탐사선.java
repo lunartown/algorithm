@@ -6,27 +6,30 @@ import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
 public class Main {
-    static final int INF = 1_000_000_007;  // 무한대 값을 적절히 설정
+    static final int INF = 1_000_000_007;
 
     static int N;
     static int[][] dist;
     static int[][] dp;
-    static boolean[][] vis;
 
     static int tsp(int cur, int mask) {
         // 모든 도시를 방문했을 경우 더 이상 비용을 추가하지 않음
         if (mask == (1 << N) - 1)
             return 0;
 
-        // 이미 방문한 상태라면 저장된 값 반환
-        if (vis[cur][mask])
+        // 이미 계산된 상태라면 저장된 값 반환
+        if (dp[cur][mask] != -1)
             return dp[cur][mask];
 
-        vis[cur][mask] = true;
+        dp[cur][mask] = INF;
 
         for (int next = 0; next < N; next++) {
             if ((mask & (1 << next)) == 0) {
-                dp[cur][mask] = Math.min(dp[cur][mask], tsp(next, mask | (1 << next)) + dist[cur][next]);
+                int newCost = tsp(next, mask | (1 << next)) + dist[cur][next];
+                // 가지치기 조건: 현재 경로가 이미 계산된 경로보다 비싸면 무시
+                if (newCost < dp[cur][mask]) {
+                    dp[cur][mask] = newCost;
+                }
             }
         }
 
@@ -51,17 +54,14 @@ public class Main {
         for (int k = 0; k < N; k++) {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    if (dist[i][j] > dist[i][k] + dist[k][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j];
-                    }
+                    dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
                 }
             }
         }
 
         dp = new int[N][1 << N];
-        vis = new boolean[N][1 << N];
         for (int[] row : dp) {
-            Arrays.fill(row, INF);
+            Arrays.fill(row, -1);
         }
 
         System.out.println(tsp(K, 1 << K));
