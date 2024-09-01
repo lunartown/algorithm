@@ -24,7 +24,9 @@ public class Main {
         int finalTotal = total;
         map.keySet().stream().sorted().forEach(key -> {
             // 각 나무 이름과 해당 빈도를 백분율로 계산하여 출력
-            sb.append(String.format("%s %.4f\n", key, map.get(key) * 100.0 / finalTotal));
+            sb.append(key).append(' ').
+                    append(String.format("%.4f", (double) map.get(key) / finalTotal * 100))
+                    .append('\n');
         });
 
         // StringBuilder에 담긴 최종 결과를 출력
