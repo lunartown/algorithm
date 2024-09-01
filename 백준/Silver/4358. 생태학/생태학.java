@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -22,12 +23,14 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
         int finalTotal = total;
-        map.keySet().stream().sorted().forEach(key -> {
-            // 각 나무 이름과 해당 빈도를 백분율로 계산하여 출력
-            sb.append(key).append(' ').
-                    append(String.format("%.4f", (double) map.get(key) / finalTotal * 100))
+        TreeSet<String> set = new TreeSet<>(map.keySet()); // 나무 이름을 정렬하기 위한 TreeSet
+
+        for (String tree : set) {
+            // 나무 이름과 그 나무의 빈도수를 출력
+            sb.append(tree).append(' ')
+                    .append(String.format("%.4f", (double) map.get(tree) / finalTotal * 100))
                     .append('\n');
-        });
+        }
 
         // StringBuilder에 담긴 최종 결과를 출력
         System.out.print(sb);
