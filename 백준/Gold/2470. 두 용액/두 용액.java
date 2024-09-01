@@ -40,9 +40,11 @@ public class Main {
 
             if (sum < 0) {
                 left++;
-            } else {
+            } else if (sum > 0) {
                 right--;
-            }
+            } else {
+		            break;
+		        }
         }
 
         sb.append(answer[0]).append(" ").append(answer[1]);
