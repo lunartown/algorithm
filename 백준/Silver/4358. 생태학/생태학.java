@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeSet;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -22,14 +22,11 @@ public class Main {
         }
 
         StringBuilder sb = new StringBuilder();
-        int finalTotal = total;
-        TreeSet<String> set = new TreeSet<>(map.keySet()); // 나무 이름을 정렬하기 위한 TreeSet
+        TreeMap<String, Integer> sortedMap = new TreeMap<>(map); // 나무 이름을 오름차순으로 정렬하기 위한 TreeMap
 
-        for (String tree : set) {
-            // 나무 이름과 그 나무의 빈도수를 출력
-            sb.append(tree).append(' ')
-                    .append(String.format("%.4f", (double) map.get(tree) / finalTotal * 100))
-                    .append('\n');
+        for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
+            // 나무 이름과 그 빈도수를 출력
+            sb.append(entry.getKey()).append(' ').append(String.format("%.4f", entry.getValue() * 100.0 / total)).append('\n');
         }
 
         // StringBuilder에 담긴 최종 결과를 출력
